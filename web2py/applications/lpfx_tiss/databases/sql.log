@@ -1,0 +1,396 @@
+timestamp: 2015-06-07T18:45:33.214399
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-06-07T18:45:33.343585
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-06-07T18:45:33.476254
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-06-07T18:45:33.632381
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE
+);
+success!
+timestamp: 2015-06-07T18:45:33.789338
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2015-06-07T18:45:33.922285
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2015-06-07T18:45:34.078376
+CREATE TABLE beneficiario(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    numeroCarteira CHAR(20) NOT NULL,
+    atendimentoRN CHAR(1) NOT NULL,
+    nomeBeneficiario CHAR(70) NOT NULL,
+    numeroCNS CHAR(15),
+    identificadorBeneficiario CHAR(512)
+);
+success!
+timestamp: 2015-06-07T21:20:41.487124
+CREATE TABLE prestador(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(512) NOT NULL,
+    ehpj CHAR(1) NOT NULL,
+    CNPJ CHAR(14),
+    CPF CHAR(11),
+    CNES CHAR(7) NOT NULL
+);
+success!
+timestamp: 2015-06-07T21:20:41.659441
+CREATE TABLE prestador_profissional(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome CHAR(70),
+    conselho INTEGER,
+    numeroConselho CHAR(15),
+    UF INTEGER NOT NULL,
+    CBOS INTEGER
+);
+success!
+timestamp: 2015-06-07T21:20:41.844867
+CREATE TABLE guiaConsulta(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    registroANS CHAR(6) NOT NULL,
+    numeroGuiaPrestador CHAR(20) NOT NULL,
+    numeroGUiaOperadora CHAR(20),
+    beneficiario INTEGER REFERENCES beneficiario (id) ON DELETE CASCADE,
+    contratado INTEGER REFERENCES prestador (id) ON DELETE CASCADE,
+    profissional INTEGER REFERENCES prestador_profissional (id) ON DELETE CASCADE,
+    indicacaoAcidente INTEGER,
+    dataAtendimento DATE NOT NULL,
+    tipoConsulta CHAR(512),
+    codigoTabela CHAR(2) NOT NULL,
+    codigoProcedimento CHAR(10) NOT NULL,
+    valorProcedimento DOUBLE NOT NULL,
+    observacao TEXT
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-06-07T21:39:09.155892
+ALTER TABLE prestador_profissional ADD prestador INTEGER REFERENCES prestador (id) ON DELETE CASCADE;
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-06-07T22:51:27.701072
+ALTER TABLE prestador ADD codigoprestadornaoperadora CHAR(14) NOT NULL DEFAULT '19018080000130';
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2015-06-08T00:55:38.341868
+CREATE TABLE lote(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data_hora TIMESTAMP NOT NULL DEFAULT '2015-06-08 00:55:38'
+);
+success!
+success!
+success!
+success!
+timestamp: 2015-06-08T00:56:07.779165
+CREATE TABLE lote_guia(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_lote INTEGER REFERENCES lote (id) ON DELETE CASCADE,
+    id_guia INTEGER REFERENCES guiaConsulta (id) ON DELETE CASCADE
+);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
